@@ -60,7 +60,7 @@ main figure img {
 #map {
    width: 100%;
    height: 360px;
-   border: 1px solid grey;
+   border: 1px solid gray;
 }
 
 main ul {
@@ -81,10 +81,11 @@ footer .next {
 }
 
 @media screen and (max-width: 900px) {
-   main{
+   main {
       max-width: 90%;
    }
-   header image.banner {
+
+   header img.banner {
       width: 100vw;
    }
 }
