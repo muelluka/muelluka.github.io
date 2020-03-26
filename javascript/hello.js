@@ -119,3 +119,17 @@ let firstParagraph = document.querySelector("#pFirst");
 console.log(firstParagraph);
 // firstParagraph.remove();
 firstParagraph.innerHTML = "Test";
+firstParagraph.style.color = "red";
+
+let indetedParas = document.querySelectorAll(".indent");
+console.log(indetedParas);
+indetedParas.innerHTML = "Test2";
+indetedParas.forEach((para, index) => {
+    console.log(`Data attribut LAT ${para.dataset.lat}`);
+    para.innerHTML = `Absatz ${index}`;
+    if ( index % 2 == 0) {
+        para.style.color = "red";
+    } else {
+        para.style.color = "blue";
+    }
+});
