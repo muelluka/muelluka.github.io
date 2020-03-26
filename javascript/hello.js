@@ -55,3 +55,15 @@ console.log(b/(a-1));
 a++;
 console.log(a);
 
+// let myAge = prompt("Wie alt bist du?");
+// console.log(`Du bsit ${myAge} Jahre alt`);
+// console.log(`Über 18? ${myAge > 18}`);
+
+// if (myAge > 18) {
+//     console.log("Glückwunsch über 18");
+// } else {
+//     console.log("Leider unter 18");
+// }
+
+
+
