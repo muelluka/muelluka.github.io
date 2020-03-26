@@ -50,8 +50,8 @@ console.log(user);
 
 let a = 2;
 let b = 4;
-console.log(a+b);
-console.log(b/(a-1));
+console.log(a + b);
+console.log(b / (a - 1));
 a++;
 console.log(a);
 
@@ -67,7 +67,7 @@ console.log(a);
 
 // Schleifen: for Schleife
 
-for(let i=0; i<10; i++) {
+for (let i = 0; i < 10; i++) {
     console.log(`Schleife ${i}`);
 }
 
@@ -86,5 +86,19 @@ function showAge(birthYear) {
     console.log(`Du bist ca. ${2020 - birthYear} Jahre alt.`)
 }
 
-showAge(1992)
-showAge(1977)
+showAge(1992);
+showAge(1977);
+
+function calcAge(birthYear) {
+    return 2020 - birthYear;
+}
+
+console.log(`Max ist ${calcAge(1992)} Jahre alt(ca.)`);
+console.log(`Sepp ist ${calcAge(1995)} Jahre alt(ca.)`);
+
+let birthYears = [1964, 1977, 1990, 1992, 2004];
+console.log(birthYears);
+
+birthYears.forEach(year => {
+    console.log(`Geboren ${year}, heute ca. ${calcAge(year)} Jahre alt.`)
+});
