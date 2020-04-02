@@ -14,5 +14,4 @@ L.control.layers({
     "OpenStreetMap.DE": L.tileLayer.provider("OpenStreetMap.DE"),
     "OpenStreetMap.HOT": L.tileLayer.provider("OpenStreetMap.HOT"),
     "OpenMapSurfer.Roads": L.tileLayer.provider("OpenMapSurfer.Roads"),
-
 }).addTo(map)
