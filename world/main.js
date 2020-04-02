@@ -46,7 +46,8 @@ let drawCircles = function (data) {
 };
 
 // drawCircles(CONFIRMED);
-drawCircles(RECOVERED);
+// drawCircles(RECOVERED);
+drawCircles(DEATH);
 
 // L.marker([0, 0]).addTo(map);
 //console.log(CONFIRMED);
