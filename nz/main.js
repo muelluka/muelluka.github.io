@@ -2,7 +2,7 @@ let map = document.querySelector("#map")
 
 let lat = map.dataset.lat;
 let lng = map.dataset.lng;
-let title = map.dataset.title
+let title = map.dataset.title;
 
 var mymap = L.map('map').setView([lat, lng], 13);
 
