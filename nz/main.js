@@ -22,6 +22,6 @@ let mymap = L.map("map", {
     ]
 });
 
-var popup = L.marker([lat, lng]).addTo(mymap);
+let popup = L.marker([lat, lng]).addTo(mymap);
 
 popup.bindPopup(title).openPopup();
