@@ -24,9 +24,13 @@ let drawCircles = function () {
     let data = CONFIRMED;
     let header = CONFIRMED[0];
     let index = header.length - 1;
+    let options = document.querySelector("#pulldown").options;
+    let value = options[options.selectedIndex].value;
+    let label = options[options.selectedIndex].text;
+    console.log(value,label,options);
 
-    // Datum anzeigen
-    document.querySelector("#datum").innerHTML = `am ${header[index]}`;
+    // Datum & Thema anzeigen anzeigen
+    document.querySelector("#datum").innerHTML = `am ${header[index]} - ${label}`;
 
     //console.log(data);
     for (let i = 1; i < data.length; i++) {
@@ -52,9 +56,8 @@ let drawCircles = function () {
 };
 
 document.querySelector("#pulldown").onchange = function() {
-    console.log("geändert");
     drawCircles();
-}
+};
 
 drawCircles();
 // drawCircles(RECOVERED);
