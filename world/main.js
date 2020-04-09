@@ -51,6 +51,11 @@ let drawCircles = function () {
     }
 };
 
+document.querySelector("#pulldown").onchange = function() {
+    console.log("geändert");
+    drawCircles();
+}
+
 drawCircles();
 // drawCircles(RECOVERED);
 // drawCircles(DEATHS);
