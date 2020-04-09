@@ -28,23 +28,31 @@ let drawCircles = function () {
     let value = options[options.selectedIndex].value;
     let label = options[options.selectedIndex].text;
     let color;
+    
     // console.log(value,label,options);
 
-    if(value === "confirmed") {
+    if (value === "confirmed") {
         data = CONFIRMED;
         color = "#0074D9";
-    } else if(value === "deaths"){
+    } else if (value === "deaths") {
         data = DEATHS;
         color = "#B10DC9";
-    } else{
+    } else {
         data = RECOVERED;
         color = "#2ECC40";
     }
+
+
+
 
     // Datum & Thema anzeigen anzeigen
     document.querySelector("#datum").innerHTML = `am ${header[index]} - ${label}`;
 
     circleGroup.clearLayers();
+
+    data.sort(function compareNumbers(row1, row2) {
+        return row2[index] - row1[index];
+    });
 
     //console.log(data);
     for (let i = 1; i < data.length; i++) {
@@ -54,6 +62,11 @@ let drawCircles = function () {
         let lat = row[2];
         let lng = row[3];
         let val = row[index];
+
+        if (val === "0") {
+            continue;
+            // console.log(val)
+        }
 
         //let mrk = L.marker([lat,lng]).addTo(map);
         //mrk.bindPopup(`${reg}: ${val}`);
@@ -71,7 +84,7 @@ let drawCircles = function () {
     }
 };
 
-document.querySelector("#pulldown").onchange = function() {
+document.querySelector("#pulldown").onchange = function () {
     drawCircles();
 };
 
@@ -80,6 +93,11 @@ slider.min = 4;
 slider.max = CONFIRMED[0].length - 1;
 slider.step = 1;
 slider.value = slider.max;
+
+slider.onchange = function () {
+    drawCircles();
+
+}
 
 drawCircles();
 
