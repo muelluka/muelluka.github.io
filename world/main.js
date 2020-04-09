@@ -27,14 +27,18 @@ let drawCircles = function () {
     let options = document.querySelector("#pulldown").options;
     let value = options[options.selectedIndex].value;
     let label = options[options.selectedIndex].text;
+    let color;
     // console.log(value,label,options);
 
     if(value === "confirmed") {
         data = CONFIRMED;
+        color = "#0074D9";
     } else if(value === "deaths"){
         data = DEATHS;
+        color = "#B10DC9";
     } else{
         data = RECOVERED;
+        color = "#2ECC40";
     }
 
     // Datum & Thema anzeigen anzeigen
@@ -50,6 +54,7 @@ let drawCircles = function () {
         let lat = row[2];
         let lng = row[3];
         let val = row[index];
+
         //let mrk = L.marker([lat,lng]).addTo(map);
         //mrk.bindPopup(`${reg}: ${val}`);
 
@@ -59,7 +64,8 @@ let drawCircles = function () {
         let s = 0.5;
         let r = Math.sqrt(val * s / Math.PI);
         let circle = L.circleMarker([lat, lng], {
-            radius: r
+            radius: r,
+            color: color
         }).addTo(circleGroup);
         circle.bindPopup(`${reg}: ${val}`);
     }
