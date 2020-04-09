@@ -20,36 +20,38 @@ L.control.layers({
     "Thematische Darstellung": circleGroup
 }).addTo(map)
 
-let drawCircles = function (data) {
-let data = CONFIRMED;
-let header = CONFIRMED[0];
-let index = header.length - 1;
+let drawCircles = function () {
+    let data = CONFIRMED;
+    let header = CONFIRMED[0];
+    let index = header.length - 1;
 
+    // Datum anzeigen
+    document.querySelector("#datum").innerHTML = `am ${header[index]}`;
+
+    //console.log(data);
     for (let i = 1; i < data.length; i++) {
         let row = data[i];
         //console.log(row[2],row[3]);
-        let lat = row[2]
-        let lng = row[3]
+        let reg = `${row[0]} ${row[1]}`;
+        let lat = row[2];
+        let lng = row[3];
         let val = row[index];
-        // let mrk = L.marker([lat, lng]).addTo(map);
-        // mrk.bindPopup(`${row[0]} ${row[1]}: ${val}`);
+        //let mrk = L.marker([lat,lng]).addTo(map);
+        //mrk.bindPopup(`${reg}: ${val}`);
 
-        let s = 0.25
-
-        // A = r^2 *PI
-        // r^2 = A/PI
-        // r = Wurzel(A/PI)
+        //A = r²*PI
+        //r² = A/PI
+        //r = WURZEL(A/PI)
+        let s = 0.5;
         let r = Math.sqrt(val * s / Math.PI);
-
         let circle = L.circleMarker([lat, lng], {
             radius: r
         }).addTo(circleGroup);
-
-        circle.bindPopup(`${row[0]} ${row[1]}: ${val}`);
+        circle.bindPopup(`${reg}: ${val}`);
     }
 };
 
-// drawCircles(CONFIRMED);
+drawCircles();
 // drawCircles(RECOVERED);
 // drawCircles(DEATHS);
 
