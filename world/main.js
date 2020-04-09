@@ -28,7 +28,7 @@ let drawCircles = function () {
     let value = options[options.selectedIndex].value;
     let label = options[options.selectedIndex].text;
     let color;
-    
+
     // console.log(value,label,options);
 
     if (value === "confirmed") {
@@ -106,3 +106,38 @@ drawCircles();
 
 // L.marker([0, 0]).addTo(map);
 //console.log(CONFIRMED);
+
+let playButton = document.querySelector("#play");
+let runningAnimation = null;
+
+playButton.onclick = function () {
+    // console.log("clicked");
+
+    let value = slider.min;
+    if (slider.value == slider.max) {
+        value = slider.min;
+    } else {
+        value = slider.value
+    }
+
+    playButton.value = "⏸";
+
+    if (runningAnimation) {
+        window.clearInterval(runningAnimation);
+        playButton.value = "⏵";
+        runningAnimation = null;
+    } else {
+        runningAnimation = window.setInterval(function () {
+            // console.log(value, "250 ms");
+            slider.value = value;
+            drawCircles();
+            value++;
+
+            if (value > slider.max) {
+                window.clearInterval(runningAnimation);
+                playButton.value = "⏵";
+                runningAnimation = null;
+            }
+        }, 250)
+    }
+};
