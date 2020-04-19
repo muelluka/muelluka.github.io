@@ -60,11 +60,40 @@ sights.on("data:loaded", function () {
 let wandern = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:WANDERWEGEOGD&srsName=EPSG:4326&outputFormat=json";
 
 L.geoJson.ajax(wandern, {
+    filter: function (feature) {
+        // console.log("Feature in filter: ", feature);
+        return feature.properties.KATEGORIE == "StWW";
+    },
     style: function () {
         return {
-            color: "green",
-            weight: 5
+            color: "black",
+            weight: 3,
+            dashArray: "8,6"  
         };
+    },
+    onEachFeature: function (feature, layer) {
+        // console.log("Feature: ", feature);
+        layer.bindPopup(`<h3>${feature.properties.BEZ_TEXT}</h3>
+        `);
+    }
+}).addTo(map);
+
+L.geoJson.ajax(wandern, {
+    filter: function (feature) {
+        // console.log("Feature in filter: ", feature);
+        return feature.properties.KATEGORIE == "rundumadum";
+    },
+    style: function () {
+        return {
+            color: "black",
+            weight: 3,
+            dashArray: "0,5"  
+        };
+    },
+    onEachFeature: function (feature, layer) {
+        // console.log("Feature: ", feature);
+        layer.bindPopup(`<h3>${feature.properties.BEZ_TEXT}</h3>
+        `);
     }
 }).addTo(map);
 
@@ -72,7 +101,7 @@ let heritage = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature
 
 L.geoJson.ajax(heritage, {
     filter: function (feature) {
-        console.log("Feature in filter: ", feature);
+        // console.log("Feature in filter: ", feature);
         return feature.properties.TYP == 1;
     },
     style: function () {
@@ -82,7 +111,7 @@ L.geoJson.ajax(heritage, {
         };
     },
     onEachFeature: function (feature, layer) {
-        console.log("Feature: ", feature);
+        // console.log("Feature: ", feature);
         layer.bindPopup(`<h3>${feature.properties.NAME}</h3>
         <p>${feature.properties.INFO}</p>
         `);
@@ -91,7 +120,7 @@ L.geoJson.ajax(heritage, {
 
 L.geoJson.ajax(heritage, {
     filter: function (feature) {
-        console.log("Feature in filter: ", feature);
+        // console.log("Feature in filter: ", feature);
         return feature.properties.TYP == 2;
     },
     style: function () {
@@ -101,7 +130,7 @@ L.geoJson.ajax(heritage, {
         };
     },
     onEachFeature: function (feature, layer) {
-        console.log("Feature: ", feature);
+        // console.log("Feature: ", feature);
         layer.bindPopup(`<h3>${feature.properties.NAME}</h3>
         <p>${feature.properties.INFO}</p>
         `);
