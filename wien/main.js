@@ -38,8 +38,10 @@ let sights = L.geoJson.ajax(sightUrl, {
         let marker = L.marker(latlng, {
             icon: icon
         });
-        // console.log("Point", point);
+        console.log("Point", point);
         marker.bindPopup(`<h3>${point.properties.NAME}</h3>
+        <p>Adresse: ${point.properties.ADRESSE}</p>
+        <p>Beschreibung: ${point.properties.BEMERKUNG}</p>
         <p><a target="links" href="${point.properties.WEITERE_INF}">Link</a></p>
         `);
         return marker;
@@ -48,7 +50,7 @@ let sights = L.geoJson.ajax(sightUrl, {
 
 sights.on("data:loaded", function () {
     sightGroup.addLayer(sights);
-    console.log('data loaded!');
+    // console.log('data loaded!');
     map.fitBounds(sightGroup.getBounds());
 });
 
@@ -73,7 +75,7 @@ L.geoJson.ajax(heritage, {
         };
     },
     onEachFeature: function (feature, layer) {
-        console.log("Feature: ", feature);
+        // console.log("Feature: ", feature);
         layer.bindPopup(`<h3>${feature.properties.NAME}</h3>
         <p>${feature.properties.INFO}</p>
         `);
