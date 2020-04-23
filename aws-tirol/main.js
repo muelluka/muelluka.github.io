@@ -57,7 +57,7 @@ let aws = L.geoJson.ajax(awsUrl, {
 }).addTo(overlay.stations);
 
 let darwTemperature = function (jsonData) {
-    console.log("Aus der Funktion: ", jsonData);
+    // console.log("Aus der Funktion: ", jsonData);
     L.geoJson(jsonData, {
         filter: function (feature) {
             return feature.properties.LT
@@ -81,7 +81,7 @@ let darwTemperature = function (jsonData) {
 //4. die funktion draw Wind in data:loaded aufrufen
 
 let darwWind = function (jsonData) {
-    console.log("Aus der Funktion: ", jsonData);
+    // console.log("Aus der Funktion: ", jsonData);
     L.geoJson(jsonData, {
         filter: function (feature) {
             return feature.properties.WG
@@ -103,16 +103,11 @@ let darwWind = function (jsonData) {
 aws.on("data:loaded", function () {
     // console.log(aws.toGeoJSON());
     darwTemperature(aws.toGeoJSON());
+    map.fitBounds(overlay.stations.getBounds());
 
+    darwWind(aws.toGeoJSON());
     map.fitBounds(overlay.stations.getBounds());
 
     overlay.temperature.addTo(map);
-
-    darwWind(aws.toGeoJSON());
-
-    map.fitBounds(overlay.stations.getBounds());
-
-    overlay.windspeed.addTo(map);
-
 
 });
