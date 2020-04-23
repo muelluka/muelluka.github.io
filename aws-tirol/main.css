@@ -42,7 +42,7 @@ main h2 {
     border: 1px solid gray;
 }
 
-.lable-temperature {
+.label-temperature {
     font-size: 1.25em;
     font-weight: bold;
     padding: 0.3em;
@@ -51,9 +51,9 @@ main h2 {
     display: inline;
     text-shadow:
         -1px -1px 0 white,
-        1px -1px 0 white,
-        -1px 1px 0 white,
-        1px -1px 0 white
+         1px -1px 0 white,
+        -1px  1px 0 white,
+         1px  1px 0 white
 }
 
 .label-wind {

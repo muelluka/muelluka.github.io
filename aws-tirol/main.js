@@ -1,4 +1,3 @@
-
 let startLayer = L.tileLayer.provider("BasemapAT.grau");
 
 let map = L.map("map", {
