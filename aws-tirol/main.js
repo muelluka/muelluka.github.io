@@ -90,7 +90,7 @@ let darwWind = function (jsonData) {
             return L.marker(latlng, {
                 title: `${feature.properties.name} (${feature.geometry.coordinates[2]}m)`,
                 icon: L.divIcon({
-                    html: `<div class="lable-wind">${(feature.properties.WG.toFixed(1)*3.6)}</div>`,
+                    html: `<div class="lable-wind">${(Math.round(feature.properties.WG.toFixed(1)*3.6))}</div>`,
                     className: "ignore-me" //dirty hack
                 })
             })
