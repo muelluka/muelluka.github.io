@@ -1,8 +1,6 @@
 let startLayer = L.tileLayer.provider("BasemapAT.grau");
 
 let map = L.map("map", {
-    center: [47.3, 11.5],
-    zoom: 8,
     layers: [
         startLayer
     ]
@@ -34,7 +32,7 @@ let awsUrl = "https://aws.openweb.cc/stations";
 let aws = L.geoJson.ajax(awsUrl, {
     filter: function (feature) {
         console.log("Feature in filter: ", feature);
-        return feature.properties.LT != undefined;
+        return feature.properties.LT;
     },
     pointToLayer: function (point, latlng) {
         // console.log("point: ", point);
@@ -53,4 +51,12 @@ let aws = L.geoJson.ajax(awsUrl, {
         return marker;
     }
 }).addTo(overlay.stations);
-n
+
+aws.on("data:loaded", function () {
+    console.log(aws.toGeoJSON());
+
+    map.fitBounds(overlay.stations.getBounds());
+
+    overlay.stations.addTo(map);
+
+});
