@@ -8,7 +8,7 @@ let map = L.map("map", {
 
 let overlay = {
     stations: L.featureGroup(),
-    temperature: L.featureGroup() 
+    temperature: L.featureGroup()
 }
 
 L.control.layers({
@@ -54,12 +54,19 @@ let aws = L.geoJson.ajax(awsUrl, {
     }
 }).addTo(overlay.stations);
 
-let darwTemperature = function(jsonData){
-    console.log("Aus der Funktion: ",jsonData);
+let darwTemperature = function (jsonData) {
+    console.log("Aus der Funktion: ", jsonData);
     L.geoJson(jsonData, {
-        pointToLayer: function(feature, latlng) {
+        filter: function (feature) {
+            return feature.properties.LT
+        },
+        pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
-                title: `${feature.properties.name} (${feature.geometry.coordinates[2]}m)`
+                title: `${feature.properties.name} (${feature.geometry.coordinates[2]}m)`,
+                icon: L.divIcon({
+                    html: `<div class="lable-temperature">${feature.properties.LT.toFixed(1)}</div>`,
+                    className: "ignore-me" //dirty hack
+                })
             })
         }
     }).addTo(overlay.temperature)
