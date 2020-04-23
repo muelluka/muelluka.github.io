@@ -8,7 +8,8 @@ let map = L.map("map", {
 
 let overlay = {
     stations: L.featureGroup(),
-    temperature: L.featureGroup()
+    temperature: L.featureGroup(),
+    windspeed: L.featureGroup()
 }
 
 L.control.layers({
@@ -25,7 +26,8 @@ L.control.layers({
     ])
 }, {
     "Wetterstationen Tirol": overlay.stations,
-    "Temperatur (°C)": overlay.temperature
+    "Temperatur (°C)": overlay.temperature,
+    "Windgeschwindigkeit (km/h)": overlay.windspeed
 }).addTo(map);
 
 let awsUrl = "https://aws.openweb.cc/stations";
@@ -72,6 +74,32 @@ let darwTemperature = function (jsonData) {
     }).addTo(overlay.temperature)
 
 };
+
+//1. neues overlay definieren, zu L.control.layers hinzufügen und auf default anzeigen
+//2. die funktion drawwind als 1.1 Kopie von drawTempearature mit anpassungen
+//3. einen neuen Stil .lable-wind im CSS con main.css
+//4. die funktion draw Wind in data:loaded aufrufen
+
+let darwWind = function (jsonData) {
+    console.log("Aus der Funktion: ", jsonData);
+    L.geoJson(jsonData, {
+        filter: function (feature) {
+            return feature.properties.WG
+        },
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {
+                title: `${feature.properties.name} (${feature.geometry.coordinates[2]}m)`,
+                icon: L.divIcon({
+                    html: `<div class="lable-wind">${(feature.properties.WG.toFixed(1)*3.6)}</div>`,
+                    className: "ignore-me" //dirty hack
+                })
+            })
+        }
+    }).addTo(overlay.windspeed)
+
+};
+
+
 aws.on("data:loaded", function () {
     // console.log(aws.toGeoJSON());
     darwTemperature(aws.toGeoJSON());
@@ -79,5 +107,12 @@ aws.on("data:loaded", function () {
     map.fitBounds(overlay.stations.getBounds());
 
     overlay.temperature.addTo(map);
+
+    darwWind(aws.toGeoJSON());
+
+    map.fitBounds(overlay.stations.getBounds());
+
+    overlay.windspeed.addTo(map);
+
 
 });
