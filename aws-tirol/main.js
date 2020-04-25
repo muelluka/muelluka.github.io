@@ -1,7 +1,10 @@
 let startLayer = L.tileLayer.provider("BasemapAT.grau");
 
 let map = L.map("map", {
+    center: [47.3, 11.5],
+    zoom: 8,
     layers: [
+
         startLayer
     ]
 });
@@ -9,7 +12,8 @@ let map = L.map("map", {
 let overlay = {
     stations: L.featureGroup(),
     temperature: L.featureGroup(),
-    wind: L.featureGroup()
+    wind: L.featureGroup(),
+    snow: L.featureGroup()
 }
 
 L.control.layers({
@@ -27,7 +31,8 @@ L.control.layers({
 }, {
     "Wetterstationen Tirol": overlay.stations,
     "Temperatur (°C)": overlay.temperature,
-    "Windgeschwindigkeit (km/h)": overlay.wind
+    "Windgeschwindigkeit (km/h)": overlay.wind,
+    "Schneehöhe (cm)": overlay.snow
 }).addTo(map);
 
 let awsUrl = "https://aws.openweb.cc/stations";
@@ -56,7 +61,7 @@ let aws = L.geoJson.ajax(awsUrl, {
     }
 }).addTo(overlay.stations);
 
-let getColor = function(val, ramp) {
+let getColor = function (val, ramp) {
     //console.log(val, ramp);
     let col = "red";
 
@@ -74,14 +79,14 @@ let getColor = function(val, ramp) {
 
 //console.log(color);
 
-let drawTemperature = function(jsonData) {
+let drawTemperature = function (jsonData) {
     //console.log("aus der Funktion", jsonData);
     L.geoJson(jsonData, {
-        filter: function(feature) {
+        filter: function (feature) {
             return feature.properties.LT;
         },
-        pointToLayer: function(feature, latlng) {
-            let color = getColor(feature.properties.LT,COLORS.temperature);
+        pointToLayer: function (feature, latlng) {
+            let color = getColor(feature.properties.LT, COLORS.temperature);
             return L.marker(latlng, {
                 title: `${feature.properties.name} (${feature.geometry.coordinates[2]}m)`,
                 icon: L.divIcon({
@@ -98,15 +103,15 @@ let drawTemperature = function(jsonData) {
 // 3. einen neuen Stil .label-wind im CSS von main.css
 // 4. die Funktion drawWind in data:loaded aufrufen
 
-let drawWind = function(jsonData) {
+let drawWind = function (jsonData) {
     //console.log("aus der Funktion", jsonData);
     L.geoJson(jsonData, {
-        filter: function(feature) {
+        filter: function (feature) {
             return feature.properties.WG;
         },
-        pointToLayer: function(feature, latlng) {
+        pointToLayer: function (feature, latlng) {
             let kmh = Math.round(feature.properties.WG / 1000 * 3600);
-            let color = getColor(kmh,COLORS.wind);
+            let color = getColor(kmh, COLORS.wind);
             let rotation = feature.properties.WR;
             return L.marker(latlng, {
                 title: `${feature.properties.name} (${feature.geometry.coordinates[2]}m) - ${kmh} km/h`,
@@ -119,13 +124,31 @@ let drawWind = function(jsonData) {
     }).addTo(overlay.wind);
 };
 
-aws.on("data:loaded", function() {
+let drawSnow = function (jsonData) {
+    //console.log("aus der Funktion", jsonData);
+    L.geoJson(jsonData, {
+        filter: function (feature) {
+            return feature.properties.HS;
+        },
+        pointToLayer: function (feature, latlng) {
+            let color = getColor(feature.properties.HS, COLORS.snow);
+            return L.marker(latlng, {
+                title: `${feature.properties.name} (${feature.geometry.coordinates[2]}m)`,
+                icon: L.divIcon({
+                    html: `<div class="label-snow" style="background-color:${color}">${feature.properties.HS.toFixed(1)}</div>`,
+                    className: "ignore-me" // dirty hack
+                })
+            })
+        }
+    }).addTo(overlay.snow);
+};
+
+aws.on("data:loaded", function () {
     //console.log(aws.toGeoJSON());
     drawTemperature(aws.toGeoJSON());
     drawWind(aws.toGeoJSON());
+    drawSnow(aws.toGeoJSON());
+
     map.fitBounds(overlay.stations.getBounds());
-
-    overlay.wind.addTo(map);
-
-    //console.log(COLORS);
+    overlay.snow.addTo(map);
 });
