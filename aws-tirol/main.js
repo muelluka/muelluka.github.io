@@ -6,7 +6,7 @@ let map = L.map("map", {
     layers: [
 
         startLayer
-    ]
+    ],
 });
 
 let overlay = {
@@ -175,3 +175,16 @@ aws.on("data:loaded", function () {
     map.fitBounds(overlay.stations.getBounds());
     overlay.humidity.addTo(map);
 });
+
+
+let rainviewer = L.control.rainviewer({
+    position: 'bottomleft',
+    nextButtonText: '>',
+    playStopButtonText: 'Start/Stop',
+    prevButtonText: '<',
+    positionSliderLabelText: "Time:",
+    opacitySliderLabelText: "Opacity:",
+    animationInterval: 500,
+    opacity: 0.5
+});
+rainviewer.addTo(map);
