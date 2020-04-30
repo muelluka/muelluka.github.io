@@ -34,8 +34,8 @@ L.control.layers({
 //console.log(ADLERBLICKE);
 
 for (const blick of ADLERBLICKE) {
-    // console.log(blick);
-    let mrk = L.marker([blick.lat, blick.lng], {
+    //console.log(blick);
+    let mrk = L.marker([blick.lat,blick.lng], {
         icon: L.icon({
             iconSize: [32, 37],
             iconAnchor: [16, 37],
@@ -43,12 +43,14 @@ for (const blick of ADLERBLICKE) {
             iconUrl: "icons/panoramicview.png"
         })
     }).addTo(overlay.adlerblicke);
-    // L.marker([blick.lat,blick.lng]).addTo(map);
+    //L.marker([blick.lat,blick.lng]).addTo(map);
     mrk.bindPopup(`Standort ${blick.standort} (${blick.seehoehe}m)`);
 }
 overlay.adlerblicke.addTo(map);
 
 let drawEtappe = function(nr) {
+    overlay.etappen.clearLayers();
+
     //console.log(ETAPPEN[nr].track);
     let track = ETAPPEN[nr].track.replace("A", "");
     //console.log(track);
@@ -74,6 +76,15 @@ let drawEtappe = function(nr) {
     }).addTo(overlay.etappen);
     overlay.etappen.addTo(map);
 
+    for (const key in ETAPPEN[nr]) {
+        const val = ETAPPEN[nr][key];
+        console.log(`et-${key}`);
+        let elem = document.querySelector(`#et-${key}`);
+        if (elem) {
+            elem.innerHTML = val;
+            console.log(val);
+        }
+    }
 };
 drawEtappe(10);
 
