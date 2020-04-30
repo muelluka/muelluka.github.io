@@ -33,7 +33,7 @@ L.control.layers({
 
 for (const blick of ADLERBLICKE) {
     // console.log(blick);
-    let mrk = L.marker([blick.lat,blick.lng], {
+    let mrk = L.marker([blick.lat, blick.lng], {
         icon: L.icon({
             iconSize: [32, 37],
             iconAnchor: [16, 37],
@@ -46,10 +46,22 @@ for (const blick of ADLERBLICKE) {
 }
 overlay.adlerblicke.addTo(map);
 
-let gpx = new L.GPX("gpx/AdlerwegEtappe01.gpx",{
-    async: true
+let gpx = new L.GPX("gpx/AdlerwegEtappe01.gpx", {
+    async: true,
+    marker_options: {
+        startIconUrl: 'icons/number_1.png',
+        endIconUrl: 'icons/finish.png',
+        shadowUrl: null,
+        iconSize: [32, 37],
+        iconAnchor: [16, 37],
+        popupAnchor: [0, -37],
+    },
+    polyline_options: {
+        color: 'black',
+        dashArray: [2, 5]
+      }
 });
 
-gpx.on("loaded", function(evt){
-    map.fitBounds(evt.target.getBounds)
+gpx.on("loaded", function (evt) {
+    map.fitBounds(evt.target.getBounds());
 }).addTo(map);
