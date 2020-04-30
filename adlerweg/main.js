@@ -22,4 +22,12 @@ L.control.layers({
     ])
 }).addTo(map);
 
-console.log(ETAPPEN);
+
+
+for (const blick of ADLERBLICKE) {
+    console.log(blick);
+    let mark = L.marker([blick.lat,blick.lng]).addTo(map);
+    mark.bindPopup(`Standort ${blick.standort}(${blick.seehoehe}m)`);
+
+}
+
