@@ -82,7 +82,7 @@ let drawEtappe = function(nr) {
         let elem = document.querySelector(`#et-${key}`);
         if (elem) {
             elem.innerHTML = val;
-            console.log(val);
+            // console.log(val);
         }
     }
 };
