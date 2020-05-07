@@ -139,6 +139,8 @@ let controlElevation = L.control.elevation({
 L.control.scale({
     imperial: false
 }).addTo(map);
+
+let drawnMarkers = {};
 map.on("zoomend moveend", function (evt) {
     let ext = {
         north : map.getBounds().getNorth(),
@@ -153,6 +155,14 @@ map.on("zoomend moveend", function (evt) {
         //console.log(data.geonames);
 
         for (let article of data.geonames) {
+               
+            let ll = `${article.lat}${article.lng}`;
+
+            if (drawnMarkers[ll]){
+                continue;
+            } else {
+                drawnMarkers[ll] = true;
+            }
 
             let png = "";
             switch(article.feature) {
