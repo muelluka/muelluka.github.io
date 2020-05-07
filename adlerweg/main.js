@@ -75,6 +75,9 @@ let drawEtappe = function (nr) {
 
     gpx.on("loaded", function (evt) {
         map.fitBounds(evt.target.getBounds());
+        controlElevation.clear();
+        controlElevation.load(`gpx/AdlerwegEtappe${track}.gpx`);
+
     }).addTo(overlay.etappen);
     overlay.etappen.addTo(map);
 
