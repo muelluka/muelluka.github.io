@@ -151,8 +151,40 @@ map.on("zoomend moveend", function (evt) {
 
     let wiki = L.Util.jsonp(url).then( function(data) {
         //console.log(data.geonames);
+
         for (let article of data.geonames) {
-            let mrk = L.marker([article.lat,article.lng]).addTo(overlay.wikipedia);
+
+            let png = "";
+            switch(article.feature) {
+                case "city":
+                    png = "smallcity.png";
+                    break;
+                case "landmark":
+                    png = "landmark.png";
+                    break;
+                case "waterbody":
+                    png = "waterbody.png";
+                    break;
+                case "river":
+                    png = "river-2.png";
+                    break;
+                case "mountain":
+                    png = "mountains.png";
+                    break;
+                default:
+                    png = "information.png";
+
+            }
+            console.log(png);
+        
+            let mrk = L.marker([article.lat,article.lng], {
+                icon: L.icon({
+                    iconSize: [32, 37],
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37],
+                    iconUrl: `icons/${png}`
+                })
+            }).addTo(overlay.wikipedia);
             let img = "";
             if (article.thumbnailImg) {
                 img = `<img src="${article.thumbnailImg}" alt="thumbnail">`
