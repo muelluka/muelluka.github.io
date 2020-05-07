@@ -17,9 +17,15 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.5.0/gpx.js"></script>
 
+    <link rel="stylesheet" href="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.css" />
+    <script src="https://unpkg.com/@raruto/leaflet-elevation/dist/leaflet-elevation.js"></script>
+
+    
+
     <link rel="stylesheet" href="main.css">
     <script src="etappen.js"></script>
     <script src="blicke.js"></script>
+    <script src="einkehr.js"></script>
     <script defer src="main.js"></script>
 </head>
 
@@ -48,6 +54,9 @@
             Voraussetzung bei vielen Etappen.</p>
         <select id="pulldown"></select>
         <div id="map"></div>
+        <div id="profil"></div>
+
+
         <p id="et-info"></p>
         <h3>Start: <span id="et-start"></spanid></span></h3>
         <h3>Ziel: <span id="et-ziel"></spanid></span></h3>
